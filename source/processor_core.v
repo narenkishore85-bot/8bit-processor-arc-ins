@@ -167,25 +167,29 @@ module processor_core
         .Negative(negative_flag)
     );
 
-    //========================================================
-    // Flags Register
-    //========================================================
+ //========================================================
+// Flags Register
+//========================================================
 
-    flags FLAGS
-    (
-        .clk(clk),
-        .reset(reset),
+wire carry;
+wire zero;
+wire negative;
 
-        .load(flags_load),
+flags FLAGS
+(
+    .clk(clk),
+    .reset(reset),
 
-        .carry_in(carry_flag),
-        .zero_in(zero_flag),
-        .negative_in(negative_flag),
+    .load(flags_load),
 
-        .carry(),
-        .zero(),
-        .negative()
-    );
+    .carry_in(carry_flag),
+    .zero_in(zero_flag),
+    .negative_in(negative_flag),
+
+    .carry(carry),
+    .zero(zero),
+    .negative(negative)
+);
 
     //========================================================
     // Data Memory
