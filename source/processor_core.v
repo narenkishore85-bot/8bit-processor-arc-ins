@@ -47,6 +47,7 @@ module processor_core
     wire carry_flag;
     wire zero_flag;
     wire negative_flag;
+    wire overflow_flag;
 
     //========================================================
     // Data Memory
@@ -61,7 +62,7 @@ module processor_core
     wire carry;
     wire zero;
     wire negative;
-
+    wire overflow;
     //========================================================
     // Control Signals
     //========================================================
@@ -88,7 +89,7 @@ module processor_core
         .reset(reset),
         .enable(pc_enable),
         .load(pc_load),
-        .load_data(immediate),
+        .load_data(jump_addr[7:0]),
         .pc(pc)
     );
 
@@ -123,22 +124,27 @@ module processor_core
     //========================================================
 
     control_unit CONTROL
-    (
-        .opcode(opcode),
+(
+    .opcode(opcode),
 
-        .reg_write(reg_write),
-        .mem_write(mem_write),
-        .mem_read(mem_read),
+    .zero(zero),
+    .carry(carry),
+    .negative(negative),
 
-        .pc_load(pc_load),
-        .pc_enable(pc_enable),
+    .reg_write(reg_write),
+    .mem_write(mem_write),
+    .mem_read(mem_read),
 
-        .flags_load(flags_load),
+    .pc_load(pc_load),
+    .pc_enable(pc_enable),
 
-        .alu_sel(alu_sel),
-        .alu_src(alu_src)
-    );
-        //========================================================
+    .flags_load(flags_load),
+
+    .alu_sel(alu_sel),
+    .alu_src(alu_src)
+);
+    
+    //========================================================
     // Register File
     //========================================================
 
@@ -149,7 +155,7 @@ module processor_core
 
         .write_enable(reg_write),
 
-        .read_addr1(rs1),
+        .read_addr1((opcode == `OP_STORE) ? rd : rs1),
         .read_addr2(rs2),
 
         .write_addr(rd),
@@ -175,6 +181,7 @@ module processor_core
         .Result(alu_result),
 
         .Carry(carry_flag),
+        .Overflow(overflow_flag),
         .Zero(zero_flag),
         .Negative(negative_flag)
     );
@@ -193,10 +200,12 @@ module processor_core
         .carry_in(carry_flag),
         .zero_in(zero_flag),
         .negative_in(negative_flag),
+        .overflow_in(overflow_flag),
 
         .carry(carry),
         .zero(zero),
-        .negative(negative)
+        .negative(negative),
+        .overflow(overflow)
     );
 
     //========================================================
@@ -209,9 +218,9 @@ module processor_core
 
         .we(mem_write),
 
-        .address(alu_result),
+        .address(immediate),
 
-        .write_data(reg_data2),
+        .write_data(reg_data1),
 
         .read_data(mem_data)
     );

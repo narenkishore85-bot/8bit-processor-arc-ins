@@ -6,6 +6,9 @@
 module control_unit
 (
     input  wire [4:0] opcode,
+    input wire zero,
+    input wire carry,
+    input wire negative,
 
     output reg        reg_write,
     output reg        mem_write,
@@ -141,7 +144,8 @@ begin
         begin
             mem_read  = 1'b1;
             reg_write = 1'b1;
-            alu_sel   = `ALU_ADD;
+            alu_src   = 1'b1;
+            alu_sel   = `ALU_PASSB;
         end
 
         //------------------------------------------
@@ -190,21 +194,39 @@ begin
 
         `OP_BEQ:
         begin
-            // Implement with flags in next version
+            if (zero)
+            begin
+                pc_load   = 1'b1;
+                pc_enable = 1'b0;
+            end
         end
 
         `OP_BNE:
         begin
+            if (!zero)
+            begin
+                pc_load   = 1'b1;
+                pc_enable = 1'b0;
+            end
         end
-
+        
         `OP_BC:
         begin
+            if (carry)
+            begin
+                pc_load   = 1'b1;
+                pc_enable = 1'b0;
+            end
         end
 
         `OP_BN:
         begin
+            if (negative)
+            begin
+                pc_load   = 1'b1;
+                pc_enable = 1'b0;
+            end
         end
-
         //------------------------------------------
         // Halt
         //------------------------------------------

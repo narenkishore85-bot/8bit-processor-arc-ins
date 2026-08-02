@@ -10,34 +10,52 @@ module alu
 
     output reg  [7:0] Result,
     output reg        Carry,
+    output reg        Overflow,
     output wire       Zero,
     output wire       Negative
 );
 
+reg [8:0] temp;
 always @(*)
 begin
 
-    // Default outputs
-    Result = 8'h00;
-    Carry  = 1'b0;
+    Result   = 8'h00;
+    Carry    = 1'b0;
+    Overflow = 1'b0;
+    temp      = 9'h000;
 
     case(ALU_Sel)
 
         //====================================
         // Arithmetic Operations
         //====================================
+    `ALU_ADD:
+    begin
+        temp   = {1'b0, A} + {1'b0, B};
+        Result = temp[7:0];
+        Carry  = temp[8];
+    end
 
-        `ALU_ADD:
-            {Carry, Result} = A + B;
+    `ALU_SUB:
+    begin
+        temp   = {1'b0, A} - {1'b0, B};
+        Result = temp[7:0];
+        Carry = (A >= B);      // Carry = No Borrow
+    end
 
-        `ALU_SUB:
-            {Carry, Result} = A - B;
+    `ALU_INC:
+    begin
+        temp   = {1'b0, A} + 9'd1;
+        Result = temp[7:0];
+        Carry  = temp[8];
+    end
 
-        `ALU_INC:
-            {Carry, Result} = A + 8'd1;
-
-        `ALU_DEC:
-            {Carry, Result} = A - 8'd1;
+    `ALU_DEC:
+    begin
+        temp   = {1'b0, A} - 9'd1;
+        Result = temp[7:0];
+        Carry  = ~temp[8];
+    end
 
         //====================================
         // Logic Operations
@@ -87,7 +105,27 @@ begin
 
         `ALU_CMP:
         begin
-            {Carry, Result} = A - B;
+            temp   = {1'b0,A} - {1'b0,B};
+
+            Result = temp[7:0];
+            Carry  = (A >= B);
+
+            Overflow =
+                ( A[7] & ~B[7] & ~Result[7]) |
+                (~A[7] &  B[7] &  Result[7]);
+        end
+
+
+        `ALU_ADD:
+        begin
+            temp   = {1'b0,A} + {1'b0,B};
+
+            Result = temp[7:0];
+            Carry  = temp[8];
+
+            Overflow =
+                (~A[7] & ~B[7] & Result[7]) |
+                ( A[7] &  B[7] & ~Result[7]);
         end
 
         //====================================

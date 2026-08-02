@@ -1,5 +1,5 @@
 $date
-	Sun Aug 02 13:18:09 2026
+	Sun Aug 02 14:28:11 2026
 $end
 $version
 	Icarus Verilog
@@ -30,92 +30,101 @@ $var wire 1 0 mem_write $end
 $var wire 1 1 negative $end
 $var wire 1 2 negative_flag $end
 $var wire 5 3 opcode [4:0] $end
-$var wire 8 4 pc [7:0] $end
-$var wire 1 5 pc_enable $end
-$var wire 1 6 pc_load $end
-$var wire 3 7 rd [2:0] $end
-$var wire 8 8 reg_data1 [7:0] $end
-$var wire 8 9 reg_data2 [7:0] $end
-$var wire 1 : reg_write $end
+$var wire 1 4 overflow $end
+$var wire 1 5 overflow_flag $end
+$var wire 8 6 pc [7:0] $end
+$var wire 1 7 pc_enable $end
+$var wire 1 8 pc_load $end
+$var wire 3 9 rd [2:0] $end
+$var wire 8 : reg_data1 [7:0] $end
+$var wire 8 ; reg_data2 [7:0] $end
+$var wire 1 < reg_write $end
 $var wire 1 $ reset $end
-$var wire 3 ; rs1 [2:0] $end
-$var wire 3 < rs2 [2:0] $end
-$var wire 8 = write_back_data [7:0] $end
-$var wire 1 > zero $end
-$var wire 1 ? zero_flag $end
+$var wire 3 = rs1 [2:0] $end
+$var wire 3 > rs2 [2:0] $end
+$var wire 8 ? write_back_data [7:0] $end
+$var wire 1 @ zero $end
+$var wire 1 A zero_flag $end
 $scope module PC $end
 $var wire 1 # clk $end
-$var wire 1 5 enable $end
-$var wire 1 6 load $end
-$var wire 8 @ load_data [7:0] $end
+$var wire 1 7 enable $end
+$var wire 1 8 load $end
+$var wire 8 B load_data [7:0] $end
 $var wire 1 $ reset $end
-$var reg 8 A pc [7:0] $end
+$var reg 8 C pc [7:0] $end
 $upscope $end
 $scope module IMEM $end
-$var wire 8 B address [7:0] $end
+$var wire 8 D address [7:0] $end
 $var wire 1 # clk $end
-$var integer 32 C i [31:0] $end
-$var reg 16 D instruction [15:0] $end
+$var integer 32 E i [31:0] $end
+$var reg 16 F instruction [15:0] $end
 $upscope $end
 $scope module DECODER $end
-$var wire 8 E immediate [7:0] $end
-$var wire 16 F instruction [15:0] $end
-$var wire 11 G jump_addr [10:0] $end
-$var wire 5 H opcode [4:0] $end
-$var wire 3 I rd [2:0] $end
-$var wire 3 J rs1 [2:0] $end
-$var wire 3 K rs2 [2:0] $end
+$var wire 8 G immediate [7:0] $end
+$var wire 16 H instruction [15:0] $end
+$var wire 11 I jump_addr [10:0] $end
+$var wire 5 J opcode [4:0] $end
+$var wire 3 K rd [2:0] $end
+$var wire 3 L rs1 [2:0] $end
+$var wire 3 M rs2 [2:0] $end
 $upscope $end
 $scope module CONTROL $end
-$var wire 5 L opcode [4:0] $end
-$var reg 4 M alu_sel [3:0] $end
-$var reg 1 N alu_src $end
-$var reg 1 O flags_load $end
-$var reg 1 P mem_read $end
-$var reg 1 Q mem_write $end
-$var reg 1 R pc_enable $end
-$var reg 1 S pc_load $end
-$var reg 1 T reg_write $end
+$var wire 1 ( carry $end
+$var wire 1 1 negative $end
+$var wire 5 N opcode [4:0] $end
+$var wire 1 @ zero $end
+$var reg 4 O alu_sel [3:0] $end
+$var reg 1 P alu_src $end
+$var reg 1 Q flags_load $end
+$var reg 1 R mem_read $end
+$var reg 1 S mem_write $end
+$var reg 1 T pc_enable $end
+$var reg 1 U pc_load $end
+$var reg 1 V reg_write $end
 $upscope $end
 $scope module REGFILE $end
 $var wire 1 # clk $end
-$var wire 3 U read_addr1 [2:0] $end
-$var wire 3 V read_addr2 [2:0] $end
-$var wire 8 W read_data1 [7:0] $end
-$var wire 8 X read_data2 [7:0] $end
+$var wire 3 W read_addr1 [2:0] $end
+$var wire 3 X read_addr2 [2:0] $end
+$var wire 8 Y read_data1 [7:0] $end
+$var wire 8 Z read_data2 [7:0] $end
 $var wire 1 $ reset $end
-$var wire 3 Y write_addr [2:0] $end
-$var wire 8 Z write_data [7:0] $end
-$var wire 1 : write_enable $end
-$var integer 32 [ i [31:0] $end
+$var wire 3 [ write_addr [2:0] $end
+$var wire 8 \ write_data [7:0] $end
+$var wire 1 < write_enable $end
+$var integer 32 ] i [31:0] $end
 $upscope $end
 $scope module ALU $end
-$var wire 8 \ A [7:0] $end
-$var wire 4 ] ALU_Sel [3:0] $end
-$var wire 8 ^ B [7:0] $end
+$var wire 8 ^ A [7:0] $end
+$var wire 4 _ ALU_Sel [3:0] $end
+$var wire 8 ` B [7:0] $end
 $var wire 1 2 Negative $end
-$var wire 1 ? Zero $end
-$var reg 1 _ Carry $end
-$var reg 8 ` Result [7:0] $end
+$var wire 1 A Zero $end
+$var reg 1 a Carry $end
+$var reg 1 b Overflow $end
+$var reg 8 c Result [7:0] $end
+$var reg 9 d temp [8:0] $end
 $upscope $end
 $scope module FLAGS $end
 $var wire 1 ) carry_in $end
 $var wire 1 # clk $end
 $var wire 1 * load $end
 $var wire 1 2 negative_in $end
+$var wire 1 5 overflow_in $end
 $var wire 1 $ reset $end
-$var wire 1 ? zero_in $end
-$var reg 1 a carry $end
-$var reg 1 b negative $end
-$var reg 1 c zero $end
+$var wire 1 A zero_in $end
+$var reg 1 e carry $end
+$var reg 1 f negative $end
+$var reg 1 g overflow $end
+$var reg 1 h zero $end
 $upscope $end
 $scope module DMEM $end
-$var wire 8 d address [7:0] $end
+$var wire 8 i address [7:0] $end
 $var wire 1 # clk $end
-$var wire 8 e read_data [7:0] $end
+$var wire 8 j read_data [7:0] $end
 $var wire 1 0 we $end
-$var wire 8 f write_data [7:0] $end
-$var integer 32 g i [31:0] $end
+$var wire 8 k write_data [7:0] $end
+$var integer 32 l i [31:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
@@ -123,33 +132,38 @@ $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b100000000 g
-bx f
-bx e
+b100000000 l
+bx k
+bx j
+bx i
+xh
+xg
+xf
+xe
 bx d
-xc
-xb
+bx c
+0b
 xa
 bx `
-x_
+b0 _
 bx ^
-b0 ]
+bx ]
 bx \
 bx [
 bx Z
 bx Y
 bx X
 bx W
-bx V
-bx U
-0T
+0V
+0U
+1T
 0S
-1R
+0R
 0Q
 0P
-0O
-0N
-b0 M
+b0 O
+bx N
+bx M
 bx L
 bx K
 bx J
@@ -157,24 +171,24 @@ bx I
 bx H
 bx G
 bx F
-bx E
+b100000000 E
 bx D
-b100000000 C
+bx C
 bx B
-bx A
-bx @
-x?
-x>
+xA
+x@
+bx ?
+bx >
 bx =
-bx <
+0<
 bx ;
-0:
+bx :
 bx 9
-bx 8
-bx 7
-06
-15
-bx 4
+08
+17
+bx 6
+05
+x4
 bx 3
 x2
 x1
@@ -196,68 +210,71 @@ bx %
 0!
 $end
 #5000
-b0 A
-b0 4
-b0 B
-0b
-01
-0c
-0>
+b1111000 ?
+b1111000 \
+02
+b0 d
 0a
+0)
+b1111000 c
+0A
+b1111000 %
+b1011 O
+b1011 &
+b1011 _
+1P
+1'
+1V
+1<
+b11 W
+b0 :
+b0 Y
+b0 ^
+b0 k
+b1111000 `
+b1111000 B
+b1011 3
+b1011 J
+b1011 N
+b1 9
+b1 K
+b1 [
+b11 =
+b11 L
+b0 ;
+b0 Z
+b110 >
+b110 M
+b110 X
+b0 .
+b0 j
+b1111000 +
+b1111000 G
+b1111000 i
+b101111000 -
+b101111000 I
+b101100101111000 F
+b101100101111000 ,
+b101100101111000 H
+b0 C
+b0 6
+b0 D
+0g
+04
+0f
+01
+0h
+0@
+0e
 0(
-b1000 [
+b1000 ]
 1!
 1#
 #10000
 0!
 0#
 #15000
-b11001 =
-b11001 Z
-02
-b1011 M
-b1011 &
-b1011 ]
-1N
-1'
-1T
-1:
-0_
-0)
-b11001 `
-0?
-b0 .
-b0 e
-b11001 %
-b11001 d
-b11001 ^
-b1011 3
-b1011 H
-b1011 L
-b1 7
-b1 I
-b1 Y
-b0 8
-b0 W
-b0 \
-b0 ;
-b0 J
-b0 U
-b0 9
-b0 X
-b0 f
-b110 <
-b110 K
-b110 V
-b11001 +
-b11001 @
-b11001 E
-b100011001 -
-b100011001 G
-b101100100011001 D
-b101100100011001 ,
-b101100100011001 F
-b1000 [
+b1000 ]
 1!
 1#
 #20000
@@ -266,124 +283,154 @@ b1000 [
 0"
 0$
 #25000
-b1 A
-b1 4
-b1 B
+b10 9
+b10 K
+b10 [
+b1001111000 -
+b1001111000 I
+b101101001111000 F
+b101101001111000 ,
+b101101001111000 H
+b1 C
+b1 6
+b1 D
 1!
 1#
 #30000
 0!
 0#
 #35000
-b10 7
-b10 I
-b10 Y
-b1000011001 -
-b1000011001 G
-b101101000011001 D
-b101101000011001 ,
-b101101000011001 F
-b10 A
-b10 4
-b10 B
+12
+b11110000 ?
+b11110000 \
+b11110000 d
+b11110000 c
+0A
+b11110000 %
+1Q
+1*
+0P
+0'
+b0 O
+b0 &
+b0 _
+1V
+1<
+b1 W
+b1111000 :
+b1111000 Y
+b1111000 ^
+b1111000 k
+b1111000 `
+b101000 B
+b1 3
+b1 J
+b1 N
+b11 9
+b11 K
+b11 [
+b1 =
+b1 L
+b1111000 ;
+b1111000 Z
+b10 >
+b10 M
+b10 X
+b101000 +
+b101000 G
+b101000 i
+b1100101000 -
+b1100101000 I
+b101100101000 F
+b101100101000 ,
+b101100101000 H
+b10 C
+b10 6
+b10 D
 1!
 1#
 #40000
 0!
 0#
 #45000
+b0 ?
+b0 \
 02
-0_
-0)
-b0 =
-b0 Z
-1O
-1*
-0N
-0'
-b1100 M
-b1100 &
-b1100 ]
-0T
-0:
-b0 `
-1?
-b0 %
 b0 d
-b11001 ^
-b1100 3
-b1100 H
-b1100 L
-b0 7
-b0 I
+b0 c
+1A
+b0 %
+0T
+07
+b0 W
+b0 :
 b0 Y
-b11001 8
-b11001 W
-b11001 \
-b1 ;
-b1 J
-b1 U
-b11001 9
-b11001 X
-b11001 f
-b10 <
-b10 K
-b10 V
-b101000 +
-b101000 @
-b101000 E
-b101000 -
-b101000 G
-b11 A
-b11 4
-b11 B
-b110000000101000 D
-b110000000101000 ,
-b110000000101000 F
+b0 ^
+b0 k
+b0 `
+b0 B
+b10011 3
+b10011 J
+b10011 N
+b0 9
+b0 K
+b0 [
+b0 =
+b0 L
+b0 ;
+b0 Z
+b0 >
+b0 M
+b0 X
+b0 +
+b0 G
+b0 i
+b0 -
+b0 I
+b1001100000000000 F
+b1001100000000000 ,
+b1001100000000000 H
+0Q
+0*
+0V
+0<
+b11 C
+b11 6
+b11 D
+1f
+11
 1!
 1#
 #50000
 0!
 0#
 #55000
-0R
-05
-b0 M
-b0 &
-b0 ]
-0O
-0*
-b0 ^
-b10011 3
-b10011 H
-b10011 L
-b0 8
-b0 W
-b0 \
-b0 ;
-b0 J
-b0 U
-b0 9
-b0 X
-b0 f
-b0 <
-b0 K
-b0 V
-b0 +
-b0 @
-b0 E
-b0 -
-b0 G
-1c
-1>
-b1001100000000000 D
-b1001100000000000 ,
-b1001100000000000 F
-b100 A
-b100 4
-b100 B
 1!
 1#
 #60000
+0!
+0#
+#65000
+1!
+1#
+#70000
+0!
+0#
+#75000
+1!
+1#
+#80000
+0!
+0#
+#85000
+1!
+1#
+#90000
+0!
+0#
+#95000
+1!
+1#
+#100000
 0!
 0#

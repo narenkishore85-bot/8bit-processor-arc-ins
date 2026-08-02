@@ -41,9 +41,9 @@ module instruction_memory
     // Instruction Fetch
     //========================================================
 
-    always @(posedge clk)
+    always @(*)
     begin
-        instruction <= memory[address];
+        instruction = memory[address];
     end
 
 endmodule
