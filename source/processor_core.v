@@ -1,5 +1,7 @@
 `timescale 1ns / 1ps
 
+`include "../include/opcodes.vh"
+
 module processor_core
 (
     input wire clk,
@@ -27,6 +29,7 @@ module processor_core
     wire [2:0] rs1;
     wire [2:0] rs2;
     wire [7:0] immediate;
+    wire [10:0] jump_addr;
 
     //========================================================
     // Register File
@@ -41,15 +44,23 @@ module processor_core
     //========================================================
 
     wire [7:0] alu_result;
-    wire       carry_flag;
-    wire       zero_flag;
-    wire       negative_flag;
+    wire carry_flag;
+    wire zero_flag;
+    wire negative_flag;
 
     //========================================================
     // Data Memory
     //========================================================
 
     wire [7:0] mem_data;
+
+    //========================================================
+    // Flag Register Outputs
+    //========================================================
+
+    wire carry;
+    wire zero;
+    wire negative;
 
     //========================================================
     // Control Signals
@@ -63,10 +74,10 @@ module processor_core
     wire pc_enable;
 
     wire flags_load;
-
     wire alu_src;
 
     wire [3:0] alu_sel;
+
     //========================================================
     // Program Counter
     //========================================================
@@ -93,7 +104,7 @@ module processor_core
     );
 
     //========================================================
-    // Instruction Decoder
+    // Decoder
     //========================================================
 
     decoder DECODER
@@ -103,7 +114,8 @@ module processor_core
         .rd(rd),
         .rs1(rs1),
         .rs2(rs2),
-        .immediate(immediate)
+        .immediate(immediate),
+        .jump_addr(jump_addr)
     );
 
     //========================================================
@@ -126,8 +138,7 @@ module processor_core
         .alu_sel(alu_sel),
         .alu_src(alu_src)
     );
-
-    //========================================================
+        //========================================================
     // Register File
     //========================================================
 
@@ -156,6 +167,7 @@ module processor_core
     alu ALU
     (
         .A(reg_data1),
+
         .B(alu_src ? immediate : reg_data2),
 
         .ALU_Sel(alu_sel),
@@ -167,29 +179,25 @@ module processor_core
         .Negative(negative_flag)
     );
 
- //========================================================
-// Flags Register
-//========================================================
+    //========================================================
+    // Flags Register
+    //========================================================
 
-wire carry;
-wire zero;
-wire negative;
+    flags FLAGS
+    (
+        .clk(clk),
+        .reset(reset),
 
-flags FLAGS
-(
-    .clk(clk),
-    .reset(reset),
+        .load(flags_load),
 
-    .load(flags_load),
+        .carry_in(carry_flag),
+        .zero_in(zero_flag),
+        .negative_in(negative_flag),
 
-    .carry_in(carry_flag),
-    .zero_in(zero_flag),
-    .negative_in(negative_flag),
-
-    .carry(carry),
-    .zero(zero),
-    .negative(negative)
-);
+        .carry(carry),
+        .zero(zero),
+        .negative(negative)
+    );
 
     //========================================================
     // Data Memory
