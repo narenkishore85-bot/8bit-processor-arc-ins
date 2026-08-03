@@ -16,106 +16,21 @@ module alu
 );
 
 reg [8:0] temp;
+
 always @(*)
 begin
 
+    // Default outputs
     Result   = 8'h00;
     Carry    = 1'b0;
     Overflow = 1'b0;
-    temp      = 9'h000;
+    temp     = 9'd0;
 
-    case(ALU_Sel)
+    case (ALU_Sel)
 
-        //====================================
-        // Arithmetic Operations
-        //====================================
-    `ALU_ADD:
-    begin
-        temp   = {1'b0, A} + {1'b0, B};
-        Result = temp[7:0];
-        Carry  = temp[8];
-    end
-
-    `ALU_SUB:
-    begin
-        temp   = {1'b0, A} - {1'b0, B};
-        Result = temp[7:0];
-        Carry = (A >= B);      // Carry = No Borrow
-    end
-
-    `ALU_INC:
-    begin
-        temp   = {1'b0, A} + 9'd1;
-        Result = temp[7:0];
-        Carry  = temp[8];
-    end
-
-    `ALU_DEC:
-    begin
-        temp   = {1'b0, A} - 9'd1;
-        Result = temp[7:0];
-        Carry  = ~temp[8];
-    end
-
-        //====================================
-        // Logic Operations
-        //====================================
-
-        `ALU_AND:
-            Result = A & B;
-
-        `ALU_OR:
-            Result = A | B;
-
-        `ALU_XOR:
-            Result = A ^ B;
-
-        `ALU_NOT:
-            Result = ~A;
-
-        //====================================
-        // Shift Operations
-        //====================================
-
-        `ALU_SHL:
-        begin
-            Carry  = A[7];
-            Result = A << 1;
-        end
-
-        `ALU_SHR:
-        begin
-            Carry  = A[0];
-            Result = A >> 1;
-        end
-
-        //====================================
-        // Pass Through
-        //====================================
-
-        `ALU_PASSA:
-            Result = A;
-
-        `ALU_PASSB:
-            Result = B;
-
-        //====================================
-        // Compare
-        //====================================
-
-        `ALU_CMP:
-        begin
-            temp   = {1'b0,A} - {1'b0,B};
-
-            Result = temp[7:0];
-            Carry  = (A >= B);
-
-            Overflow =
-                ( A[7] & ~B[7] & ~Result[7]) |
-                (~A[7] &  B[7] &  Result[7]);
-        end
-
-
+        //========================================
+        // ADD
+        //========================================
         `ALU_ADD:
         begin
             temp   = {1'b0,A} + {1'b0,B};
@@ -128,14 +43,132 @@ begin
                 ( A[7] &  B[7] & ~Result[7]);
         end
 
-        //====================================
-        // Default
-        //====================================
+        //========================================
+        // SUB
+        //========================================
+        `ALU_SUB:
+        begin
+            temp   = {1'b0,A} - {1'b0,B};
 
+            Result = temp[7:0];
+            Carry  = (A >= B);
+
+            Overflow =
+                ( A[7] & ~B[7] & ~Result[7]) |
+                (~A[7] &  B[7] &  Result[7]);
+        end
+
+        //========================================
+        // INC
+        //========================================
+        `ALU_INC:
+        begin
+            temp   = {1'b0,A} + 9'd1;
+
+            Result = temp[7:0];
+            Carry  = temp[8];
+        end
+
+        //========================================
+        // DEC
+        //========================================
+        `ALU_DEC:
+        begin
+            temp   = {1'b0,A} - 9'd1;
+
+            Result = temp[7:0];
+            Carry  = (A != 8'd0);
+        end
+
+        //========================================
+        // AND
+        //========================================
+        `ALU_AND:
+        begin
+            Result = A & B;
+        end
+
+        //========================================
+        // OR
+        //========================================
+        `ALU_OR:
+        begin
+            Result = A | B;
+        end
+
+        //========================================
+        // XOR
+        //========================================
+        `ALU_XOR:
+        begin
+            Result = A ^ B;
+        end
+
+        //========================================
+        // NOT
+        //========================================
+        `ALU_NOT:
+        begin
+            Result = ~A;
+        end
+
+        //========================================
+        // Shift Left
+        //========================================
+        `ALU_SHL:
+        begin
+            Carry  = A[7];
+            Result = A << 1;
+        end
+
+        //========================================
+        // Shift Right
+        //========================================
+        `ALU_SHR:
+        begin
+            Carry  = A[0];
+            Result = A >> 1;
+        end
+
+        //========================================
+        // PASS A
+        //========================================
+        `ALU_PASSA:
+        begin
+            Result = A;
+        end
+
+        //========================================
+        // PASS B
+        //========================================
+        `ALU_PASSB:
+        begin
+            Result = B;
+        end
+
+        //========================================
+        // COMPARE
+        //========================================
+        `ALU_CMP:
+        begin
+            temp   = {1'b0,A} - {1'b0,B};
+
+            Result = temp[7:0];
+            Carry  = (A >= B);
+
+            Overflow =
+                ( A[7] & ~B[7] & ~Result[7]) |
+                (~A[7] &  B[7] &  Result[7]);
+        end
+
+        //========================================
+        // Default
+        //========================================
         default:
         begin
-            Result = 8'h00;
-            Carry  = 1'b0;
+            Result   = 8'h00;
+            Carry    = 1'b0;
+            Overflow = 1'b0;
         end
 
     endcase

@@ -1,0 +1,5 @@
+START:
+    LOADI R1, 10
+    LOADI R2, 20
+    ADD   R3, R1, R2
+HALT
