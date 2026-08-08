@@ -174,6 +174,41 @@ def encode_jc(addr):
 def encode_jnc(addr):
     return (opcode("JNC") << 11) | addr
 
+def encode_beq(addr):
+
+    op = opcode("BEQ")
+
+    return (op << 11) | addr
+
+
+def encode_bne(addr):
+
+    op = opcode("BNE")
+
+    return (op << 11) | addr
+
+
+def encode_bc(addr):
+
+    op = opcode("BC")
+
+    return (op << 11) | addr
+
+
+def encode_bn(addr):
+
+    op = opcode("BN")
+
+    return (op << 11) | addr
+
+def encode_mov(rd, rs):
+
+    op = opcode("MOV")
+
+    rd = reg_number(rd)
+    rs = reg_number(rs)
+
+    return (op << 11) | (rd << 8) | (rs << 5)
 
 # ==========================================
 # Misc

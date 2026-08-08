@@ -2,6 +2,8 @@ from encoder import *
 from lexer import tokenize
 from parser import parse
 
+
+
 # ==========================================
 # Symbol Table
 # ==========================================
@@ -161,6 +163,21 @@ def assemble_line(line):
 
     elif inst == "HALT":
         return encode_halt()
+    
+    elif inst == "BEQ":
+        return encode_beq(int(operands[0]))
+
+    elif inst == "BNE":
+        return encode_bne(int(operands[0]))
+
+    elif inst == "BC":
+        return encode_bc(int(operands[0]))
+
+    elif inst == "BN":
+        return encode_bn(int(operands[0]))
+    
+    elif inst == "MOV":
+        return encode_mov(operands[0], operands[1])
 
     else:
         raise ValueError(f"Unknown instruction: {inst}")
